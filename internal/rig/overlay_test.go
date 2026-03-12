@@ -264,7 +264,7 @@ func TestEnsureGitignorePatterns_CreatesNewFile(t *testing.T) {
 	}
 
 	// Check all required patterns are present (.beads/ intentionally excluded — see overlay.go)
-	patterns := []string{".runtime/", ".claude/", ".logs/", "__pycache__/", "state.json"}
+	patterns := []string{".runtime/", ".claude/statsig/", ".claude/todos/", ".claude/settings.local.json", ".logs/", "__pycache__/", "state.json"}
 	for _, pattern := range patterns {
 		if !containsLine(string(content), pattern) {
 			t.Errorf(".gitignore missing pattern %q", pattern)
@@ -302,7 +302,7 @@ func TestEnsureGitignorePatterns_AppendsToExisting(t *testing.T) {
 	}
 
 	// Should add required patterns (.beads/ intentionally excluded — see overlay.go)
-	patterns := []string{".runtime/", ".claude/", ".logs/", "__pycache__/", "state.json"}
+	patterns := []string{".runtime/", ".claude/statsig/", ".claude/todos/", ".claude/settings.local.json", ".logs/", "__pycache__/", "state.json"}
 	for _, pattern := range patterns {
 		if !containsLine(string(content), pattern) {
 			t.Errorf(".gitignore missing pattern %q", pattern)

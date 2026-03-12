@@ -70,14 +70,15 @@ func EnsureGitignorePatterns(worktreePath string) error {
 	// This has regressed twice (PR #753 added it, #891 removed it,
 	// #966 re-added it). See overlay_test.go for a regression guard.
 	//
-	// .claude/ is the broad pattern (covers commands/, settings.json, rules/, etc.).
-	// Settings are installed in gastown-managed parent directories via --settings flag,
-	// but Cursor still creates .claude/ inside worktrees at runtime. The narrow
-	// .claude/commands/ pattern missed other Cursor-created files, causing gt done
-	// to fail with "uncommitted changes would be lost" on untracked .claude/ entries.
+	// Only ignore specific .claude/ runtime subdirs so that .claude/commands/
+	// (custom skills/slash commands) can be committed and shared across workers.
+	// Previously the broad ".claude/" pattern was used, but it prevented teams
+	// from sharing custom skills via git.
 	requiredPatterns := []string{
 		".runtime/",
-		".claude/",
+		".claude/statsig/",
+		".claude/todos/",
+		".claude/settings.local.json",
 		".logs/",
 		"__pycache__/",
 		"state.json",
